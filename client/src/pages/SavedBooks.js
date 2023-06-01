@@ -9,8 +9,6 @@ import {
 } from 'react-bootstrap';
 
 
-
-import { getMe, deleteBook } from '../utils/API';
 import Auth from '../utils/auth';
 import { removeBookId } from '../utils/localStorage';
 import { REMOVE_BOOK } from "../utils/mutations";
@@ -66,14 +64,17 @@ const SavedBooks = () => {
       return false;
     }
 
-    try {
-      const response = await deleteBook(bookId, token);
+   
+      try {
+        const { data } = await removeBook({
+          variables: { bookId },
+        });
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+      // if (!response.ok) {
+      //   throw new Error('something went wrong!');
+      // }
 
-      const updatedUser = await response.json();
+      // const updatedUser = await response.json();
      
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
@@ -89,7 +90,7 @@ const SavedBooks = () => {
 
   return (
     <>
-      <div fluid className='text-light bg-dark p-5'>
+      <div fluid = 'true' className='text-light bg-dark p-5'>
         <Container>
           <h1>Viewing saved books!</h1>
         </Container>
@@ -103,8 +104,8 @@ const SavedBooks = () => {
         <Row>
           {userData.savedBooks.map((book) => {
             return (
-              <Col md="4">
-                <Card key={book.bookId} border='dark'>
+              <Col key={book.bookId} md="4">
+                <Card border='dark'>
                   {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>

@@ -7,7 +7,7 @@ const resolvers = {
   
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('books');
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('You need to be logged in!');
     },
@@ -41,7 +41,7 @@ const resolvers = {
           const updatedUser = await User.findByIdAndUpdate(
             { _id: context.user._id },
             // take the input type to replace "body" as the arguement
-            { $addToSet: { savedBooks: args.input } },
+            { $addToSet: { savedBooks: {...args } }},
             { new: true, runValidators: true }
           );
   
