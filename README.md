@@ -7,7 +7,7 @@ The Book search engine uses the MERN stack and with a React front end, MongoDB d
 
 To install necessary dependencies, run the following command:
 
-npm i
+npm i &
 ## Usage
 
 To use the application from the command line (after installing dependencies):
